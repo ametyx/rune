@@ -20,13 +20,10 @@ jobs:
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat
           cd Odin
           ./build.bat 1
+      - name: Get branch name
+        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - name: Get version
-        id: version
-        run: |
-          BRANCH_NAME=${GITHUB_REF#refs/heads/}
-          VERSION=${BRANCH_NAME##*/}
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "Version resolved as: $VERSION"
+        run: echo "VERSION=${BRANCH_NAME##*/}" >> $GITHUB_ENV
       - name: Build Rune
         shell: cmd
         run: |
