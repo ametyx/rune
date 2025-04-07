@@ -1,6 +1,6 @@
 # Changelog
 
-## 🎉 Version 0.1.0
+## Version 0.1.0
 
 First release of the project, may still be buggy, may not cover all scenarios. It currently allows you to:
 - Create new projects using `rune new [build-mode] -o:<target_name>`
