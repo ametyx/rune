@@ -16,10 +16,10 @@ jobs:
         uses: laytan/setup-odin@v2.9.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/checkout@v4
       - name: Build Rune
         shell: cmd
         run: |
+          mkdir dist
           odin build src -out:dist/rune.exe -define:VERSION=${{ github.event.inputs.version }}
       - name: Upload binary
         uses: actions/upload-artifact@v4
