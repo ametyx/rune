@@ -1,4 +1,4 @@
-name: Release ${{ github.event.inputs.version }}
+name: Release
 
 on:
   workflow_dispatch:
@@ -25,5 +25,5 @@ jobs:
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
-          name: dist-windows-x86_64_windows
+          name: dist-windows-x86_64-windows_${{ github.event.inputs.version }}
           path: ./bin
