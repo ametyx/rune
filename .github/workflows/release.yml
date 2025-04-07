@@ -1,8 +1,11 @@
-name: Tagged Release Build
+name: Release
 
 on:
-  create:
-    branched: ['release/**']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version of the release'
+        required: true
 
 jobs:
   dist-windows-x86_64:
@@ -20,14 +23,10 @@ jobs:
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat
           cd Odin
           ./build.bat 1
-      - name: Get branch name
-        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
-      - name: Get version
-        run: echo "VERSION=${BRANCH_NAME##*/}" >> $GITHUB_ENV
       - name: Build Rune
         shell: cmd
         run: |
-          odin build src -out:bin/rune.exe -define:VERSION=\"${{ env.VERSION }}\"
+          ./Odin/odin build src -out:bin/rune.exe -define:VERSION=${{ github.event.inputs.version }}
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
