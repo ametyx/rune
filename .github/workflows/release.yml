@@ -13,20 +13,11 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - name: Download Odin
-        shell: cmd
-        run: |
-          git clone https://github.com/odin-lang/Odin
-      - name: Build Odin
-        shell: cmd
-        run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat
-          cd Odin
-          ./build.bat 1
+      - uses: laytan/setup-odin@v2
       - name: Build Rune
         shell: cmd
         run: |
-          ./Odin/odin build src -out:bin/rune.exe -define:VERSION=${{ github.event.inputs.version }}
+          odin build src -out:bin/rune.exe -define:VERSION=${{ github.event.inputs.version }}
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
