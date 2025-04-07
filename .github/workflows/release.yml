@@ -20,9 +20,9 @@ jobs:
       - name: Build Rune
         shell: cmd
         run: |
-          odin build src -out:bin/rune.exe -define:VERSION=${{ github.event.inputs.version }}
+          odin build src -out:dist/rune.exe -define:VERSION=${{ github.event.inputs.version }}
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
           name: dist-windows-x86_64_windows
-          path: ./bin
+          path: ./dist
