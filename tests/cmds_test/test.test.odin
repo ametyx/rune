@@ -65,6 +65,35 @@ should_process_tests_with_test_flag :: proc(t: ^testing.T) {
 }
 
 @(test)
+should_process_tests_with_package_flag :: proc(t: ^testing.T) {
+    sys := utils.System {
+        process_exec = mocks.mock_success_process_exec,
+        make_directory = mocks.mock_make_directory_no_err,
+        exists = mocks.mock_exists_true
+    }
+
+    schema := utils.Schema {
+        configs = {
+            output = "MOCK_OUTPUT",
+            test_output = "MOCK_OUTPUT",
+            target = "MOCK_TARGET",
+            test_profile = "MOCK_PROFILE",
+            target_type = "exe"
+        },
+        profiles = {
+            {
+                arch = "windows_amd64",
+                entry = ".",
+                name = "MOCK_PROFILE"
+            }
+        }
+    }
+
+    res := cmds.process_test(sys, { "test", "-p:some_package" }, schema)
+    testing.expect_value(t, res, "")
+}
+
+@(test)
 should_process_tests_with_file_flag :: proc(t: ^testing.T) {
     sys := utils.System {
         process_exec = mocks.mock_success_process_exec,
@@ -202,7 +231,7 @@ should_fail_if_file_flag_malformed :: proc(t: ^testing.T) {
 
     res := cmds.process_test(sys, { "test", "-f" }, schema)
     defer delete(res)
-    testing.expect_value(t, res, "Invalid file flag -f. Make sure it is formatted -f:file_name")
+    testing.expect_value(t, res, "Invalid file flag -f. Make sure it is formatted -f:<file_name>")
 }
 
 @(test)
@@ -228,5 +257,31 @@ should_fail_if_test_flag_malformed :: proc(t: ^testing.T) {
 
     res := cmds.process_test(sys, { "test", "-t" }, schema)
     defer delete(res)
-    testing.expect_value(t, res, "Invalid test name flag -t. Make sure it is formatted -t:test_name")
+    testing.expect_value(t, res, "Invalid test name flag -t. Make sure it is formatted -t:<test_name>")
+}
+
+@(test)
+should_fail_if_package_flag_malformed :: proc(t: ^testing.T) {
+    sys := utils.System {}
+
+    schema := utils.Schema {
+        configs = {
+            output = "MOCK_OUTPUT",
+            test_output = "MOCK_OUTPUT",
+            target = "MOCK_TARGET",
+            test_profile = "MOCK_PROFILE",
+            target_type = "exe"
+        },
+        profiles = {
+            {
+                arch = "windows_amd64",
+                entry = ".",
+                name = "MOCK_PROFILE"
+            }
+        }
+    }
+
+    res := cmds.process_test(sys, { "test", "-p" }, schema)
+    defer delete(res)
+    testing.expect_value(t, res, "Invalid package flag -p. Make sure it is formatted -p:<package_name>")
 }

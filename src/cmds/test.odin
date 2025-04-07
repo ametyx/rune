@@ -37,6 +37,12 @@ process_test :: proc(sys: utils.System, args: []string, schema: utils.Schema) ->
         if file_parse_err != "" {
             return file_parse_err
         }
+
+        package_parse_err := parse_package_flag(args[1:], &profile)
+        if package_parse_err != "" {
+            return package_parse_err
+        }
+
         test_parse_err := parse_test_flag(args[1:], &profile)
         if test_parse_err != "" {
             return test_parse_err
@@ -76,7 +82,7 @@ parse_file_flag :: proc(args: []string, profile: ^utils.SchemaProfile) -> (strin
             args_arr := strings.split(arg, ":")
             defer delete(args_arr)
             if len(args_arr) != 2 {
-                return fmt.aprintf("Invalid file flag %s. Make sure it is formatted -f:file_name", arg)
+                return fmt.aprintf("Invalid file flag %s. Make sure it is formatted -f:<file_name>", arg)
             }
 
             // Update the profile's entry with the specified file
@@ -85,6 +91,34 @@ parse_file_flag :: proc(args: []string, profile: ^utils.SchemaProfile) -> (strin
             if append_err != nil {
                 return fmt.aprintf("Failed to append: %s", append_err)
             }
+        }
+    }
+
+    return ""
+}
+
+// parse_package_flag processes the `-p:<package_name>` flag, which specifies a particular test package
+// to run.
+//
+// Parameters:
+// - arg: The `-p` argument passed in the command line.
+// - profile: The profile to modify with the file information.
+//
+// Returns:
+// - An error message if the flag is invalid or incorrectly formatted.
+@(private="file")
+parse_package_flag :: proc(args: []string, profile: ^utils.SchemaProfile) -> (string) {
+    for arg in args {
+        // Handle the -f flag for file specification
+        if strings.starts_with(arg, "-p") {
+            args_arr := strings.split(arg, ":")
+            defer delete(args_arr)
+            if len(args_arr) != 2 {
+                return fmt.aprintf("Invalid package flag %s. Make sure it is formatted -p:<package_name>", arg)
+            }
+
+            // Update the profile's entry with the specified file
+            profile.entry = args_arr[1]
         }
     }
 
@@ -106,7 +140,7 @@ parse_test_flag :: proc(args: []string, profile: ^utils.SchemaProfile) -> (strin
             args_arr := strings.split(arg, ":")
             defer delete(args_arr)
             if len(args_arr) != 2 {
-                return fmt.aprintf("Invalid test name flag %s. Make sure it is formatted -t:test_name", arg)
+                return fmt.aprintf("Invalid test name flag %s. Make sure it is formatted -t:<test_name>", arg)
             }
 
             // Define the test names to run by adding a define flag
