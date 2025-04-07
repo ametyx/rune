@@ -12,8 +12,11 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 15
     steps:
+      - name: Setup Odin
+        uses: laytan/setup-odin@v2.9.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v4
-      - uses: laytan/setup-odin@v2
       - name: Build Rune
         shell: cmd
         run: |
