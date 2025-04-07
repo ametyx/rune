@@ -23,7 +23,8 @@ jobs:
       - name: Get version
         id: version
         run: |
-          VERSION=$(basename "${GITHUB_REF}")
+          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          VERSION=${BRANCH_NAME##*/}
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "Version resolved as: $VERSION"
       - name: Build Rune
