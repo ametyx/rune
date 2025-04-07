@@ -37,6 +37,7 @@ main :: proc() {
     }
 
     schema, has_schema := utils.read_root_file(sys)
+    defer delete(schema.scripts)
     cmd := strings.to_lower(os2.args[1])
 
     if !has_schema && cmd != "new" {
@@ -77,6 +78,4 @@ main :: proc() {
         logger.success(msg)
         delete(msg)
     }
-
-    delete(schema.scripts)
 }

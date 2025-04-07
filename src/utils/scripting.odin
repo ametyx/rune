@@ -16,9 +16,13 @@ import "core:os/os2"
 process_script :: proc(sys: System, script: string) -> (string, string) {
     cmds := strings.split(script, " ")
     defer delete(cmds)
-    _, stdout, stderr, process_err := sys.process_exec({
+    state, stdout, stderr, process_err := sys.process_exec({
         command = cmds
     }, context.allocator)
+
+    if state.exit_code < 0 {
+        os2.exit(state.exit_code)
+    }
 
     defer delete(stdout)
 
