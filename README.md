@@ -26,7 +26,8 @@ Commands:
   test [profile] [-t:<test>] [-f:<file>]
                                    Run tests for the project. If no profile is specified, uses the default in rune.json.
                                    -t:<test>    Run a specific test by name.
-                                   -f:<file>    Run tests from a specific file or package.
+                                   -f:<file>    Run tests from a specific file.
+                                   -p<package>  Run tests from a specific package
                                    Example: rune test debug -t:math_addition -f:math.odin
 
   run [profile | script]           Compile and run the executable for a given profile or script.
@@ -102,6 +103,9 @@ rune test -f:./path/to/my/file.odin
 
 # Run a specific test
 rune test -t:name_of_my_test_procedure
+
+# Run a specific package
+rune test -p:my_package
 ```
 
 **🚀Run**
