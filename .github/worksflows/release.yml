@@ -1,0 +1,37 @@
+name: Tagged Release Build
+
+on:
+  push:
+    branched: ['release/**']
+
+jobs:
+  dist-windows-x86_64:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Odin
+        shell: cmd
+        run: |
+          git clone https://github.com/odin-lang/Odin
+      - name: Build Odin
+        shell: cmd
+        run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat
+          cd Odin
+          ./build.bat 1
+      - name: Get version
+        id: version
+        run: |
+          VERSION=$(basename "${GITHUB_REF}")
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Version resolved as: $VERSION"
+      - name: Build Rune
+        shell: cmd
+        run: |
+          odin build src -out:bin/rune.exe -define:VERSION=\"${{ env.VERSION }}\"
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-windows-x86_64_windows
+          path: ./bin

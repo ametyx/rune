@@ -11,10 +11,11 @@ import "cmds"
 import "logger"
 import "utils"
 
+VERSION :: #config(VERSION, "dev")
+
 
 main :: proc() {
     start_time := time.now()
-    version := "0.1.0"
 
     sys := utils.System {
         exists = os2.exists,
@@ -51,7 +52,7 @@ main :: proc() {
 
     switch cmd {
         case "-v", "--version":
-            logger.info(version)
+            logger.info(VERSION)
         case "-h", "--help":
             cmds.print_help()
         case "build":
