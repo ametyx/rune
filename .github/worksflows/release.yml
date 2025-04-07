@@ -1,7 +1,7 @@
 name: Tagged Release Build
 
 on:
-  push:
+  create:
     branched: ['release/**']
 
 jobs:
