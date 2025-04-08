@@ -4,7 +4,7 @@
 
 ## 🔧 Features
 
-- 🔍 **Explicit Build Definitions** – Everything lives in a single `.rune.json` file.
+- 🔍 **Explicit Build Definitions** – Everything lives in `rune.json` file.
 - 🧱 **Multi-profile Support** – Build for multiple architectures easily.
 - ⚙️ **Script Hooks** – Add pre/post build behavior with reusable named scripts.
 - 📦 **Custom Output Paths & Flags** – Fine-tune builds per profile with full control.
