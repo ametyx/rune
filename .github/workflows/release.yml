@@ -20,7 +20,7 @@ jobs:
       - name: Build Rune
         shell: cmd
         run: |
-          mkdir bin
+          mkdir dist
           odin build src -out:dist/rune.exe -define:VERSION=${{ github.event.inputs.version }}
       - name: Run tests
         shell: cmd
@@ -43,7 +43,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build Rune
         run: |
-          mkdir bin
+          mkdir dist
           odin build src -out:dist/rune -define:VERSION=${{ github.event.inputs.version }}
       - name: Run tests
         run: |
@@ -65,7 +65,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build Rune
         run: |
-          mkdir bin
+          mkdir dist
           odin build src -out:dist/rune -define:VERSION=${{ github.event.inputs.version }}
       - name: Run tests
         run: |
@@ -87,7 +87,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build Rune
         run: |
-          mkdir bin
+          mkdir dist
           odin build src -out:dist/rune -define:VERSION=${{ github.event.inputs.version }}
       - name: Run tests
         run: |
