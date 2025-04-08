@@ -44,7 +44,7 @@ jobs:
         run: |
           mkdir dist
           odin build src -out:dist/rune -define:VERSION=${{ github.event.inputs.version }}
-          cp .\README.md dist\
+          cp ./README.md dist/
       - name: Run tests
         run: |
           ./dist/rune test
@@ -67,7 +67,7 @@ jobs:
         run: |
           mkdir dist
           odin build src -out:dist/rune -define:VERSION=${{ github.event.inputs.version }}
-          cp .\README.md dist\
+          cp ./README.md dist/
       - name: Run tests
         run: |
           ./dist/rune test
@@ -90,7 +90,7 @@ jobs:
         run: |
           mkdir dist
           odin build src -out:dist/rune -define:VERSION=${{ github.event.inputs.version }}
-          cp .\README.md dist\
+          cp ./README.md dist/
       - name: Run tests
         run: |
           ./dist/rune test
