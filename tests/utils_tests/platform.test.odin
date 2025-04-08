@@ -1,4 +1,4 @@
-package utils_test
+package utils_tests
 
 import "core:fmt"
 import "core:testing"

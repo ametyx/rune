@@ -1,4 +1,4 @@
-package logger_test
+package logger_tests
 
 import "core:fmt"
 import "core:testing"

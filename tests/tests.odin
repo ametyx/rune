@@ -1,5 +1,5 @@
 package tests
 
-@require import "cmds_test"
-@require import "logger_test"
-@require import "utils_test"
+@require import "cmds_tests"
+@require import "logger_tests"
+@require import "utils_tests"
