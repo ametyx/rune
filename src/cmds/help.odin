@@ -21,10 +21,11 @@ print_help :: proc() {
     logger.info("  new [build-mode] <target>        Create a new rune.json file with the given build mode and output target.");
     logger.info("                                   Example: rune new debug bin/my_app");
     logger.info("");
-    logger.info("  test [profile] [-t:<test>] [-f:<file>]");  
+    logger.info("  test [profile] [-t:<test>] [-f:<file>] [-p:<package>]");  
     logger.info("                                   Run tests for the project. If no profile is specified, uses the default in rune.json.");
     logger.info("                                   -t:<test>    Run a specific test by name.");
-    logger.info("                                   -f:<file>    Run tests from a specific file or package.");
+    logger.info("                                   -f:<file>    Run tests from a specific file.");
+    logger.info("                                   -p:<package> Run tests from a specific package.");
     logger.info("                                   Example: rune test debug -t:math_addition -f:math.odin");
     logger.info("");
     logger.info("  run [profile | script]           Compile and run the executable for a given profile or script.");
