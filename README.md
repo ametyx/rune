@@ -23,11 +23,11 @@ Commands:
   new [build-mode] <target>        Create a new rune.json file with the given build mode and output target.
                                    Example: rune new debug bin/my_app
 
-  test [profile] [-t:<test>] [-f:<file>]
+  test [profile] -t:<test> -f:<file> -p:<package>
                                    Run tests for the project. If no profile is specified, uses the default in rune.json.
                                    -t:<test>    Run a specific test by name.
                                    -f:<file>    Run tests from a specific file.
-                                   -p<package>  Run tests from a specific package
+                                   -p:<package> Run tests from a specific package
                                    Example: rune test debug -t:math_addition -f:math.odin
 
   run [profile | script]           Compile and run the executable for a given profile or script.
