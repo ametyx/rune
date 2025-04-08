@@ -9,6 +9,30 @@
 - ⚙️ **Script Hooks** – Add pre/post build behavior with reusable named scripts.
 - 📦 **Custom Output Paths & Flags** – Fine-tune builds per profile with full control.
 
+## Installation
+
+There are currently two ways of installing rune. You can either pick a distribution from the releases or you can build from source. Currently, the distributions `ARE NOT SIGNED`. Because of this, you may end up getting malware notices. I promise you it's not a malware 🥲
+
+If you don't want to use one of the distrutions and instead want to build from source to be sure you don't run a malware, you can either clone the repository by running ```git clone https://github.com/ametyx/rune.git``` or you can simply download the source code from one of the releases. I suggested always picking the latest release.
+Once you have the source code, run the follow command to build the project in your terminal
+
+```sh
+# For Windows
+odin build src -out:bin/rune.exe
+
+# For Linux or MacOS
+odin build src -out:bin/rune
+```
+
+***Note***: If you build from source, the version show as `dev` since it is usually inferred from the Github workflow. If you want to set it, you can set it with the following command and replacing `{YOUR_VERSION}` with the version of the release you downloaded
+```sh
+# For Windows
+odin build src -out:bin/rune.exe -define:VERSION={YOUR_VERSION}
+
+# For Linux or MacOS
+odin build src -out:bin/rune -define:VERSION={YOUR_VERSION}
+```
+
 ## Usage
 
 **❓Help**

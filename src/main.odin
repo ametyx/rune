@@ -37,6 +37,11 @@ main :: proc() {
         return
     }
 
+    if os2.args[1] == "-v" || os2.args[1] == "--version" {
+        logger.info(VERSION)
+        return
+    }
+
     schema, schema_err := utils.read_root_file(sys)
     defer delete(schema.scripts)
     cmd := strings.to_lower(os2.args[1])
@@ -53,8 +58,6 @@ main :: proc() {
     defer delete(success)
 
     switch cmd {
-        case "-v", "--version":
-            logger.info(VERSION)
         case "-h", "--help":
             cmds.print_help()
         case "build":
