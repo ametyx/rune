@@ -70,6 +70,22 @@ validate_schema :: proc(schema: Schema) -> string {
         return strings.clone("Invalid schema target type")
     }
 
+    // Check for duplicated profiles
+    seen_profiles := map[string]bool{}
+    defer delete(seen_profiles)
+    has_duplicated_profiles := false
+    for profile in schema.profiles {
+        if seen_profiles[profile.name] {
+            has_duplicated_profiles = true
+            break
+        }
+        seen_profiles[profile.name] = true
+    }
+
+    if has_duplicated_profiles {
+        return strings.clone("There are duplicated profiles in your rune.json file")
+    }
+
     return ""
 }
 

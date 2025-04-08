@@ -10,7 +10,7 @@ on:
 jobs:
   dist-windows-x86_64:
     runs-on: windows-latest
-    timeout-minutes: 15
+    timeout-minutes: 3
     steps:
       - name: Setup Odin
         uses: laytan/setup-odin@v2.9.1
@@ -21,13 +21,85 @@ jobs:
         shell: cmd
         run: |
           mkdir bin
-          odin build src -out:bin/rune.exe -define:VERSION=${{ github.event.inputs.version }}
+          odin build src -out:dist/rune.exe -define:VERSION=${{ github.event.inputs.version }}
       - name: Run tests
         shell: cmd
         run: |
-          ./bin/rune.exe test
+          ./dist/rune.exe test
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
-          name: dist-windows-x86_64-windows_${{ github.event.inputs.version }}
-          path: ./bin
+          name: dist-windows-x86_64-${{ github.event.inputs.version }}
+          path: ./dist
+  
+  dist-darwin-arm64:
+    runs-on: mac-latest
+    timeout-minutes: 3
+    steps:
+      - name: Setup Odin
+        uses: laytan/setup-odin@v2.9.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v4
+      - name: Build Rune
+        shell: cmd
+        run: |
+          mkdir bin
+          odin build src -out:dist/rune -define:VERSION=${{ github.event.inputs.version }}
+      - name: Run tests
+        shell: cmd
+        run: |
+          ./dist/rune test
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-darwin-arm64-${{ github.event.inputs.version }}
+          path: ./dist
+
+  dist-darwin-x86_64:
+    runs-on: macos-13
+    timeout-minutes: 3
+    steps:
+      - name: Setup Odin
+        uses: laytan/setup-odin@v2.9.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v4
+      - name: Build Rune
+        shell: cmd
+        run: |
+          mkdir bin
+          odin build src -out:dist/rune -define:VERSION=${{ github.event.inputs.version }}
+      - name: Run tests
+        shell: cmd
+        run: |
+          ./dist/rune test
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-darwin-x86_64-${{ github.event.inputs.version }}
+          path: ./dist
+
+  dist-linux-x86_64:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Setup Odin
+        uses: laytan/setup-odin@v2.9.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v4
+      - name: Build Rune
+        shell: cmd
+        run: |
+          mkdir bin
+          odin build src -out:dist/rune -define:VERSION=${{ github.event.inputs.version }}
+      - name: Run tests
+        shell: cmd
+        run: |
+          ./dist/rune test
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-linux-x86_64-${{ github.event.inputs.version }}
+          path: ./dist

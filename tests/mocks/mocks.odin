@@ -1,3 +1,4 @@
+#+feature dynamic-literals
 package mocks
 
 import "base:runtime"
@@ -107,6 +108,24 @@ mock_read_entire_file_from_path_ok :: proc(name: string, alloc: runtime.Allocato
             output = "MOCK_OUTPUT",
             target = "MOCK_TARGET",
             target_type = "MOCK_TARGET_TYPE"
+        }
+    }
+
+    data, _ := json.marshal(schema)
+
+    return data, nil
+}
+
+mock_read_entire_file_from_path_duplicated_profiles :: proc(name: string, alloc: runtime.Allocator) -> ([]byte, os2.Error) {
+    schema := utils.Schema {
+        configs = {
+            output = "MOCK_OUTPUT",
+            target = "MOCK_TARGET",
+            target_type = "MOCK_TARGET_TYPE"
+        },
+        profiles = {
+            { name = "test" },
+            { name = "test" }
         }
     }
 

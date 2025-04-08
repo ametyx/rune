@@ -1,3 +1,4 @@
+#+feature dynamic-literals
 package utils_tests
 
 import "core:testing"
@@ -125,4 +126,22 @@ should_fail_if_fails_to_write_file :: proc(t: ^testing.T) {
     res := utils.write_root_file(sys, schema)
     defer delete(res)
     testing.expect_value(t, res, "Failed to write schema to rune.json: Exist")
+}
+
+@(test)
+should_fail_if_schema_has_duplicated_profiles :: proc(t: ^testing.T) {
+    sys := utils.System {
+        exists = mocks.mock_exists_true,
+        read_entire_file_from_path = mocks.mock_read_entire_file_from_path_duplicated_profiles
+    }
+
+    s, err := utils.read_root_file(sys)
+    defer delete(s.configs.output)
+    defer delete(s.configs.target)
+    defer delete(s.configs.target_type)
+    defer delete(s.profiles[0].name)
+    defer delete(s.profiles[1].name)
+    defer delete(s.profiles)
+    defer delete(err)
+    testing.expect_value(t, err, "There are duplicated profiles in your rune.json file")
 }
