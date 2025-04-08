@@ -89,21 +89,21 @@ write_root_file :: proc(sys: System, schema: SchemaJon) -> string {
     
     // Check if the file already exists
     if sys.exists(path) {
-        return strings.clone("File rune.json already exists") // Return an error message if the file exists
+        return strings.clone("File rune.json already exists")
     }
 
     // Marshal the schema to JSON format
     json_data, err := json.marshal(schema, { pretty = true, use_enum_names = true })
     defer delete(json_data)
     if err != nil {
-        return fmt.aprintf("Failed to create rune.json:\n%s", err) // Return an error message if serialization fails
+        return fmt.aprintf("Failed to create rune.json:\n%s", err)
     }
 
     // Write the JSON data to the file
     werr := sys.write_entire_file(path, json_data)
     if werr != nil {
-        return fmt.aprintf("Failed to write schema to rune.json: %s", werr) // Return an error message if writing fails
+        return fmt.aprintf("Failed to write schema to rune.json: %s", werr)
     }
 
-    return "" // Return an empty string indicating success
+    return ""
 }
