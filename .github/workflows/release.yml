@@ -31,7 +31,7 @@ jobs:
           path: .\dist
   
   dist-darwin-arm64:
-    runs-on: mac-latest
+    runs-on: macos-latest
     timeout-minutes: 3
     steps:
       - name: Setup Odin
