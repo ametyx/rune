@@ -18,19 +18,17 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v4
       - name: Build Rune
-        shell: cmd
         run: |
           mkdir dist
           odin build src -out:dist/rune.exe -define:VERSION=${{ github.event.inputs.version }}
       - name: Run tests
-        shell: cmd
         run: |
-          ./dist/rune.exe test
+          .\dist\rune.exe test
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
           name: dist-windows-x86_64-${{ github.event.inputs.version }}
-          path: ./dist
+          path: .\dist
   
   dist-darwin-arm64:
     runs-on: mac-latest
