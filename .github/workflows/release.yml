@@ -42,12 +42,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v4
       - name: Build Rune
-        shell: cmd
         run: |
           mkdir bin
           odin build src -out:dist/rune -define:VERSION=${{ github.event.inputs.version }}
       - name: Run tests
-        shell: cmd
         run: |
           ./dist/rune test
       - name: Upload binary
@@ -66,12 +64,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v4
       - name: Build Rune
-        shell: cmd
         run: |
           mkdir bin
           odin build src -out:dist/rune -define:VERSION=${{ github.event.inputs.version }}
       - name: Run tests
-        shell: cmd
         run: |
           ./dist/rune test
       - name: Upload binary
@@ -90,12 +86,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v4
       - name: Build Rune
-        shell: cmd
         run: |
           mkdir bin
           odin build src -out:dist/rune -define:VERSION=${{ github.event.inputs.version }}
       - name: Run tests
-        shell: cmd
         run: |
           ./dist/rune test
       - name: Upload binary
