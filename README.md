@@ -17,6 +17,9 @@ If you don't want to use one of the distrutions and instead want to build from s
 Once you have the source code, run the follow command to build the project in your terminal
 
 ```sh
+# Make sure we create a bin directory
+mkdir bin
+
 # For Windows
 odin build src -out:bin/rune.exe
 
@@ -26,6 +29,9 @@ odin build src -out:bin/rune
 
 ***Note***: If you build from source, the version show as `dev` since it is usually inferred from the Github workflow. If you want to set it, you can set it with the following command and replacing `{YOUR_VERSION}` with the version of the release you downloaded
 ```sh
+# Make sure we create a bin directory
+mkdir bin
+
 # For Windows
 odin build src -out:bin/rune.exe -define:VERSION={YOUR_VERSION}
 
