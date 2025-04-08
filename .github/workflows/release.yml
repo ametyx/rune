@@ -118,6 +118,6 @@ jobs:
           tag_name: v${{ github.event.inputs.version }}
           name: Release v${{ github.event.inputs.version }}
           files: |
-            artifacts/dist-*
+            ./dist/dist-*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
