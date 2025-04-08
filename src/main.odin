@@ -36,12 +36,12 @@ main :: proc() {
         return
     }
 
-    schema, has_schema := utils.read_root_file(sys)
+    schema, schema_err := utils.read_root_file(sys)
     defer delete(schema.scripts)
     cmd := strings.to_lower(os2.args[1])
 
-    if !has_schema && cmd != "new" {
-        logger.error("rune.json does not exists. Run \"rune new [build_mode] [target]\"")
+    if schema_err != "" && cmd != "new" {
+        logger.error(schema_err)
         return;
     }
 

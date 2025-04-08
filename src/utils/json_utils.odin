@@ -4,8 +4,6 @@ import "core:encoding/json"
 import "core:fmt"
 import "core:strings"
 
-import "../logger"
-
 // Reads the `rune.json` configuration file from the root directory.
 //
 // This function checks if the `rune.json` file exists and can be read. If the file exists, 
@@ -18,27 +16,51 @@ import "../logger"
 // Returns:
 // - `Schema`: The deserialized schema from the `rune.json` file if the file exists and is read successfully.
 // - `bool`: A boolean indicating whether the file was successfully read (`true`) or not (`false`).
-read_root_file :: proc(sys: System) -> (Schema, bool) {
+read_root_file :: proc(sys: System) -> (Schema, string) {
     rune_file := "./rune.json"
 
     // Check if the file exists
     if !sys.exists(rune_file) {
-        return {}, false
+        return {}, strings.clone("Rune.json doesn't exists")
     }
 
     // Attempt to read the file's content
-    data, err := sys.read_entire_file_from_path(rune_file, context.allocator)
+    data, read_err := sys.read_entire_file_from_path(rune_file, context.allocator)
     defer delete(data)
-    if err != nil {
-        logger.error("Failed to read rune.json") // Log an error if the file cannot be read
-        return {}, false
+    if read_err != nil {
+        return {}, strings.clone("Failed to read rune.json")
     }
 
     // Unmarshal the JSON data into the schema
     schema: Schema
-    json.unmarshal(data, &schema)
+    unmarshal_err := json.unmarshal(data, &schema)
+    if unmarshal_err != nil {
+        return schema, fmt.aprintf("Failed to parse schema: %s", unmarshal_err)
+    }
 
-    return schema, true // Return the deserialized schema and success status
+    validation_err := validate_schema(schema)
+    if validation_err != "" {
+        return schema, validation_err
+    }
+
+    return schema, ""
+}
+
+@(private="file")
+validate_schema :: proc(schema: Schema) -> string {
+    if schema.configs.output == "" {
+        return strings.clone("Invalid schema output")
+    }
+
+    if schema.configs.target == "" {
+        return strings.clone("Invalid schema target")
+    }
+
+    if schema.configs.target_type == "" {
+        return strings.clone("Invalid schema target type")
+    }
+
+    return ""
 }
 
 // Writes the given schema to the `rune.json` file.

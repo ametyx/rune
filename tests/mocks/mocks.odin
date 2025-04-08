@@ -2,6 +2,9 @@ package mocks
 
 import "base:runtime"
 import "core:os/os2"
+import "core:encoding/json"
+
+import "../../src/utils"
 
 err_msg := "MOCK_ERROR"
 
@@ -95,4 +98,64 @@ mock_get_executable_directory_WIN :: proc(allocator := context.allocator) -> str
 
 mock_get_executable_directory_UNIX :: proc(allocator := context.allocator) -> string {
     return "MOCK_DIR/MOCK_SUBDIR"
+}
+
+mock_read_entire_file_from_path_ok :: proc(name: string, alloc: runtime.Allocator) -> ([]byte, os2.Error) {
+    schema := utils.Schema {
+        configs = {
+            output = "MOCK_OUTPUT",
+            target = "MOCK_TARGET",
+            target_type = "MOCK_TARGET_TYPE"
+        }
+    }
+
+    data, _ := json.marshal(schema)
+
+    return data, nil
+}
+
+mock_read_entire_file_from_path_no_output :: proc(name: string, alloc: runtime.Allocator) -> ([]byte, os2.Error) {
+    schema := utils.Schema {
+        configs = {
+            output = "",
+            target = "MOCK_TARGET",
+            target_type = "MOCK_TARGET_TYPE"
+        }
+    }
+
+    data, _ := json.marshal(schema)
+
+    return data, nil
+}
+
+mock_read_entire_file_from_path_no_target :: proc(name: string, alloc: runtime.Allocator) -> ([]byte, os2.Error) {
+    schema := utils.Schema {
+        configs = {
+            output = "MOCK_OUTPUT",
+            target = "",
+            target_type = "MOCK_TARGET_TYPE"
+        }
+    }
+
+    data, _ := json.marshal(schema)
+
+    return data, nil
+}
+
+mock_read_entire_file_from_path_no_target_type :: proc(name: string, alloc: runtime.Allocator) -> ([]byte, os2.Error) {
+    schema := utils.Schema {
+        configs = {
+            output = "MOCK_OUTPUT",
+            target = "MOCK_TARGET",
+            target_type = ""
+        }
+    }
+
+    data, _ := json.marshal(schema)
+
+    return data, nil
+}
+
+mock_read_entire_file_from_path_err :: proc(name: string, alloc: runtime.Allocator) -> ([]byte, os2.Error) {
+    return {}, os2.General_Error.Exist
 }
