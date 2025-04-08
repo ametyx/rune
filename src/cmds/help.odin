@@ -2,6 +2,7 @@ package cmds
 
 import "../logger"
 
+
 // print_help outputs the usage and available commands for the `rune` CLI tool.
 //
 // This function is called when the user invokes `rune -h` or `rune --help`.

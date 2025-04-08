@@ -3,6 +3,7 @@ package utils
 import "base:runtime"
 import "core:os/os2"
 
+
 System :: struct {
     exists: proc(path: string) -> bool,
     make_directory: proc(name: string, perm: int = 0o755) -> os2.Error,

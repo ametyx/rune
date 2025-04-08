@@ -6,6 +6,7 @@ import "../mocks"
 import "../../src/cmds"
 import "../../src/utils"
 
+
 @(test)
 should_create_rune_json_file :: proc(t: ^testing.T) {
     sys := utils.System {

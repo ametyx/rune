@@ -4,6 +4,7 @@ import "core:fmt"
 import "core:strings"
 import "core:os/os2"
 
+
 // Executes a script command and returns its standard output and error.
 //
 // Parameters:

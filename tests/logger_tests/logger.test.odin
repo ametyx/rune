@@ -5,6 +5,7 @@ import "core:testing"
 
 import "../../src/logger"
 
+
 @(test)
 should_log_info :: proc(t: ^testing.T) {
     logger.info("Hello world")

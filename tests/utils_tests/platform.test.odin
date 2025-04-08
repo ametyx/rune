@@ -5,6 +5,7 @@ import "core:testing"
 
 import "../../src/utils"
 
+
 @(test)
 return_windows_platforms :: proc(t: ^testing.T) {
     arr := []string{ "windows_i386", "windows_amd64" }

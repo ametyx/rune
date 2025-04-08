@@ -4,6 +4,7 @@ import "core:fmt"
 
 import "../logger"
 
+
 // Enum containing the different platforms
 Platform :: enum {
     Windows,

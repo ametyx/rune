@@ -14,6 +14,7 @@ import "core:strings"
 
 import "../logger"
 
+
 // BuildData defines the structure for holding build-related information like entry, output, flags, and architecture.
 BuildData :: struct {
     entry:  string,          // Path to the entry point (e.g., source file)
@@ -165,7 +166,7 @@ execute_pre_build :: proc(sys: System, step_scripts: []string, script_list: map[
         return script_err
     }
 
-    return "" // Return an empty string on success
+    return ""
 }
 
 // Executes the post-build actions defined in the profile, such as file copying or running scripts.

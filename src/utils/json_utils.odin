@@ -4,6 +4,7 @@ import "core:encoding/json"
 import "core:fmt"
 import "core:strings"
 
+
 // Reads the `rune.json` configuration file from the root directory.
 //
 // This function checks if the `rune.json` file exists and can be read. If the file exists, 

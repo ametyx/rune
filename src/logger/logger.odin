@@ -2,6 +2,7 @@ package logger
 
 import "core:fmt"
 
+
 // ANSI escape codes for terminal text color formatting
 @(private="file")
 RESET  := "\033[0m"   // Reset the text formatting
@@ -19,8 +20,8 @@ YELLOW := "\033[33m"  // Yellow color for warnings
 error :: proc(msg: string) {
     // Format the message with red color and reset formatting after
     print_msg := fmt.aprintf("%s%s%s", RED, msg, RESET)
-    fmt.println(print_msg) // Print the formatted error message
-    delete(print_msg)      // Clean up the string
+    fmt.println(print_msg)
+    delete(print_msg)
 }
 
 // Prints a warning message in yellow to the terminal.
@@ -30,8 +31,8 @@ error :: proc(msg: string) {
 warn :: proc(msg: string) {
     // Format the message with yellow color and reset formatting after
     print_msg := fmt.aprintf("%s%s%s", YELLOW, msg, RESET)
-    fmt.println(print_msg) // Print the formatted warning message
-    delete(print_msg)      // Clean up the string
+    fmt.println(print_msg)
+    delete(print_msg)
 }
 
 // Prints a success message in green to the terminal.
@@ -41,8 +42,8 @@ warn :: proc(msg: string) {
 success :: proc(msg: string) {
     // Format the message with green color and reset formatting after
     print_msg := fmt.aprintf("%s%s%s", GREEN, msg, RESET)
-    fmt.println(print_msg) // Print the formatted success message
-    delete(print_msg)      // Clean up the string
+    fmt.println(print_msg)
+    delete(print_msg)
 }
 
 // Prints an informational message to the terminal.
@@ -50,5 +51,5 @@ success :: proc(msg: string) {
 // Parameters:
 // - msg: The informational message to print. Defaults to an empty string if not provided.
 info :: proc(msg: string = "") {
-    fmt.println(msg) // Print the message (no color formatting)
+    fmt.println(msg)
 }

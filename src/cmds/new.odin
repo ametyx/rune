@@ -5,6 +5,7 @@ import "core:strings"
 
 import "../utils"
 
+
 // process_new handles the `rune new [build_mode] [target]` command.
 //
 // It validates the input arguments, generates a default `rune.json` schema
