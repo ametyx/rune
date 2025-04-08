@@ -46,6 +46,15 @@ read_root_file :: proc(sys: System) -> (Schema, string) {
     return schema, ""
 }
 
+// Validates the `rune.json` file.
+//
+// This function validates the schema to make sure the essential values are there.
+//
+// Parameters:
+// - schema: The schema to validate.
+//
+// Returns:
+// - A string message indicating success or the error encountered during the operation.
 @(private="file")
 validate_schema :: proc(schema: Schema) -> string {
     if schema.configs.output == "" {

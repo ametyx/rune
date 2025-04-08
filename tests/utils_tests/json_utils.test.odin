@@ -85,3 +85,44 @@ should_fail_if_empty_target_type :: proc(t: ^testing.T) {
     defer delete(err)
     testing.expect_value(t, err, "Invalid schema target type")
 }
+
+@(test)
+should_write_root_file :: proc(t: ^testing.T) {
+    sys := utils.System {
+        exists = mocks.mock_exists_false,
+        write_entire_file = mocks.mock_write_entire_file_ok
+    }
+
+    schema := utils.SchemaJon {}
+
+    res := utils.write_root_file(sys, schema)
+    testing.expect_value(t, res, "")
+}
+
+@(test)
+should_fail_to_write_if_file_exists :: proc(t: ^testing.T) {
+    sys := utils.System {
+        exists = mocks.mock_exists_true,
+        write_entire_file = mocks.mock_write_entire_file_ok
+    }
+
+    schema := utils.SchemaJon {}
+
+    res := utils.write_root_file(sys, schema)
+    defer delete(res)
+    testing.expect_value(t, res, "File rune.json already exists")
+}
+
+@(test)
+should_fail_if_fails_to_write_file :: proc(t: ^testing.T) {
+    sys := utils.System {
+        exists = mocks.mock_exists_false,
+        write_entire_file = mocks.mock_write_entire_file_err
+    }
+
+    schema := utils.SchemaJon {}
+
+    res := utils.write_root_file(sys, schema)
+    defer delete(res)
+    testing.expect_value(t, res, "Failed to write schema to rune.json: Exist")
+}
