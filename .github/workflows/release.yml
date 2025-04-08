@@ -21,6 +21,7 @@ jobs:
         run: |
           mkdir dist
           odin build src -out:dist/rune.exe -define:VERSION=${{ github.event.inputs.version }}
+          cp .\README.md dist\
       - name: Run tests
         run: |
           .\dist\rune.exe test
@@ -43,6 +44,7 @@ jobs:
         run: |
           mkdir dist
           odin build src -out:dist/rune -define:VERSION=${{ github.event.inputs.version }}
+          cp .\README.md dist\
       - name: Run tests
         run: |
           ./dist/rune test
@@ -65,6 +67,7 @@ jobs:
         run: |
           mkdir dist
           odin build src -out:dist/rune -define:VERSION=${{ github.event.inputs.version }}
+          cp .\README.md dist\
       - name: Run tests
         run: |
           ./dist/rune test
@@ -87,6 +90,7 @@ jobs:
         run: |
           mkdir dist
           odin build src -out:dist/rune -define:VERSION=${{ github.event.inputs.version }}
+          cp .\README.md dist\
       - name: Run tests
         run: |
           ./dist/rune test
@@ -95,29 +99,3 @@ jobs:
         with:
           name: dist-linux-x86_64-${{ github.event.inputs.version }}
           path: ./dist
-
-  create-release:
-    needs:
-      - dist-windows-x86_64
-      - dist-darwin-arm64
-      - dist-darwin-x86_64
-      - dist-linux-x86_64
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: artifacts
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: v${{ github.event.inputs.version }}
-          name: Release v${{ github.event.inputs.version }}
-          files: |
-            ./dist/dist-*
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
